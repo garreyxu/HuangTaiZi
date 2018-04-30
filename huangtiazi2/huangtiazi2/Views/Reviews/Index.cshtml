@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Huangtaizi.Models.MemberReview>
+
+@{
+    ViewBag.Title = "Team Member Statistics";
+}
+
+@section featured{
+    We are showing the latest @Model.Count() reviews
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+@foreach (var item in Model)
+{
+    <div class="statistics">
+        <h4>@item.Name</h4>
+        <span>Rate: @(item.Rating)/10</span>
+        <p>Comment: @(item.Comment)</p>
+
+        <span class="right">
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+        </span>
+    </div>
+}

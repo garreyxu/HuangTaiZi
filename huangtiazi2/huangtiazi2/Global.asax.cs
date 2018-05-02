@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Huangtaizi.Models;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -12,6 +14,12 @@ namespace Huangtaizi
     {
         protected void Application_Start()
         {
+            Database.SetInitializer(new CreateDatabaseIfNotExists<HuangTaiZiDb>());
+            using (var context = new HuangTaiZiDb())
+            {
+                context.Database.Initialize(force: true);
+            }
+
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

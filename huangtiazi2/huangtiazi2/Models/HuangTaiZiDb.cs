@@ -8,6 +8,11 @@ namespace Huangtaizi.Models
 {
     public class HuangTaiZiDb : DbContext
     {
+        public HuangTaiZiDb() : base("name=DefaultConnection")
+        {
+            
+        }
+
         public DbSet<Member> Members { get; set; }
         public DbSet<MemberReview> MemberReviews { get; set; }
     }

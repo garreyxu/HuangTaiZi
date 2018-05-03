@@ -13,7 +13,10 @@ namespace Huangtaizi.Controllers
 
         public ActionResult Index()
         {
-            var model = _db.Members.ToList();
+            var model =
+                from m in _db.Members
+                orderby m.Reviews.Count() descending
+                select m;
 
             return View(model);
         }

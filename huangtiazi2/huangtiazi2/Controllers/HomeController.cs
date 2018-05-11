@@ -11,12 +11,22 @@ namespace Huangtaizi.Controllers
     {
         HuangTaiZiDb _db = new HuangTaiZiDb();
 
-        public ActionResult Index()
+        public ActionResult Index(string SearchTerm = null)
         {
             var model =
-                from m in _db.Members
-                orderby m.Reviews.Count() descending
-                select m;
+                _db.Members
+                    .OrderByDescending(r => r.Reviews.Average(review => review.Rating))
+                    .Where(r => SearchTerm == null || r.FirstName.StartsWith(SearchTerm))
+                    .Take(10)
+                    .Select(r => new MemberListViewModel
+                    {
+                        Id = r.Id,
+                        Name = r.FirstName + " " + r.LastName,
+                        State = r.State,
+                        City = r.City,
+                        School = r.School,
+                        CountOfReviews = r.Reviews.Count()
+                    });
 
             return View(model);
         }
@@ -37,7 +47,7 @@ namespace Huangtaizi.Controllers
             return View();
         }
 
-        protected override void Dispose(bool disposing) 
+        protected override void Dispose(bool disposing)
         {
             if (_db != null)
             {

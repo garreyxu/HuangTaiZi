@@ -1,0 +1,14 @@
+﻿@model Huangtaizi.Models.Member
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Reviews for @Model.FirstName @Model.LastName</h2>
+
+@Html.Partial("_Reviews", @Model.Reviews)
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
